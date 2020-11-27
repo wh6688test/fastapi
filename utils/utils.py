@@ -7,16 +7,19 @@ import shutil
 
 logger = logging.getLogger("gunicron.error")
 
-def loadJson(jsonfile, newline='\n'):
+def loadJson(jsonfile, mode='r', encoding='utf8'):
      if not os.path.exists(jsonfile) or  os.stat(jsonfile).st_size == 0:
         return []
      dataList=[]
      with open(jsonfile, 'r') as infile:
          for line in infile:
-            dataDict=json.loads(line.strip())
-            logger.info(dataDict)
-            if dataDict:
-               dataList.append(dataDict)
+            #line=line.strip()[:-1]
+            print(line)
+            if (',' != line.strip()):
+              dataDict=json.loads(line.strip())
+              logger.info(dataDict)
+              if dataDict:
+                dataList.append(dataDict)
      return dataList 
 
 def findGroupInJsonByGid(jsonfile, gid):
